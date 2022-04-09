@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>9.0</LangVersion>
+        <OutputType>exe</OutputType>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="CaptureWindow" HintPath="../CaptureWindow/bin/Release/net48/CaptureWindow.dll"/>
+    </ItemGroup>
+</Project>

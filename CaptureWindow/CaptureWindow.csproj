@@ -2,13 +2,12 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>9.0</LangVersion>
-        <OutputType>exe</OutputType>
+        <OutputType>library</OutputType>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="System.Runtime.InteropServices.WindowsRuntime" Version="4.3.0" />
         <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22000.196" />
         <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
         <PackageReference Include="SharpDX.Direct2D1" Version="4.2.0" />
-        <PackageReference Include="CommandLineParser" Version="2.8.0" />
     </ItemGroup>
 </Project>

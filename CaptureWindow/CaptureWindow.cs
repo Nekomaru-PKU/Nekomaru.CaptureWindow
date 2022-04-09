@@ -3,6 +3,7 @@ using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Graphics.DirectX;
@@ -16,47 +17,30 @@ using DXGIDevice    = SharpDX.DXGI.Device3;
 using D3D11Device   = SharpDX.Direct3D11.Device;
 using D3D11MapFlags = SharpDX.Direct3D11.MapFlags;
 
-using CommandLine;
-
-public class CaptureWindowOptions {
-    [Option("hwnd", Required = true)]
-    public string WindowHandle { get; set; }
-    [Option('o', Required = true)]
-    public string OutputFileName { get; set; }
-}
-
 public static class CaptureWindow {
-    public static void Main(string[] args) {
-        Parser.Default.ParseArguments<CaptureWindowOptions>(args).WithParsed(options => {
-            var captureItem = CreateCaptureItemFromHWND(
-                (IntPtr)int.Parse(
-                    options.WindowHandle,
-                    NumberStyles.HexNumber));
-
-            using var d3dDevice = new D3D11Device(
-                DriverType.Hardware,
-                DeviceCreationFlags.BgraSupport);
-            using var device = CreateDirect3DDeviceFromSharpDXDevice(d3dDevice);
-            using var framePool = Direct3D11CaptureFramePool.Create(
-                device,
-                DirectXPixelFormat.B8G8R8A8UIntNormalized,
-                1,
-                captureItem.Size);
-            var session = framePool.CreateCaptureSession(captureItem);
-            session.StartCapture();
-
-            Direct3D11CaptureFrame frameTemp = null;
-            while (frameTemp == null)
-                frameTemp = framePool.TryGetNextFrame();
-
-            using var frame  = frameTemp;
-            using var bitmap = ToTexture2D(frame.Surface);
-            using var stream = File.Open(options.OutputFileName, FileMode.Create);
-            SaveTexture2DToPNG(
-                bitmap,
-                stream,
-                d3dDevice.ImmediateContext);
-            });
+    public static void Capture(IntPtr WindowHandle, string OutputFileName) {
+        var captureItem = CreateCaptureItemFromHWND(WindowHandle);
+        using var d3dDevice = new D3D11Device(
+            DriverType.Hardware,
+            DeviceCreationFlags.BgraSupport);
+        using var device = CreateDirect3DDeviceFromSharpDXDevice(d3dDevice);
+        using var framePool = Direct3D11CaptureFramePool.Create(
+            device,
+            DirectXPixelFormat.B8G8R8A8UIntNormalized,
+            1,
+            captureItem.Size);
+        var session = framePool.CreateCaptureSession(captureItem);
+        session.StartCapture();
+        Direct3D11CaptureFrame frameTemp = null;
+        while (frameTemp == null)
+            frameTemp = framePool.TryGetNextFrame();
+        using var frame  = frameTemp;
+        using var bitmap = ToTexture2D(frame.Surface);
+        using var stream = File.Open(OutputFileName, FileMode.Create);
+        SaveTexture2DToPNG(
+            bitmap,
+            stream,
+            d3dDevice.ImmediateContext);
     }
 
     static private readonly Guid GraphicsCaptureItemGuid = new Guid("79C3F95B-31F7-4EC2-A464-632EF5D30760");
