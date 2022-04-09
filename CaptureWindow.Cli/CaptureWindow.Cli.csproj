@@ -5,6 +5,6 @@
         <OutputType>exe</OutputType>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="CaptureWindow" HintPath="../CaptureWindow/bin/Release/net48/CaptureWindow.dll"/>
+        <ProjectReference Include="../CaptureWindow/CaptureWindow.csproj"/>
     </ItemGroup>
 </Project>
