@@ -1,6 +1,7 @@
 using System;
+using Nekomaru;
 if (args.Length != 2) {
-    Console.WriteLine("Usage: CaptureWindow.Cli.exe <windowHandle> <outputFileName>");
+    Console.WriteLine("Usage: Nekomaru.CaptureWindow.Cli.exe <windowHandle> <outputFileName>");
     Environment.Exit(-1);
 }
 if (! args[1].ToLower().EndsWith(".png")) {
