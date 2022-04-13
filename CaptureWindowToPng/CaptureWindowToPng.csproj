@@ -2,10 +2,10 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>10.0</LangVersion>
-        <OutputType>library</OutputType>
+        <OutputType>exe</OutputType>
     </PropertyGroup>
     <PropertyGroup>
-        <AssemblyName>Nekomaru.CaptureWindow</AssemblyName>
+        <AssemblyName>CaptureWindowToPng</AssemblyName>
         <Version>0.1.3</Version>
         <Description>A simple tool to help capture framebuffers and save them as image files using the Windows.Graphics.Capture APIs.</Description>
         <Authors>Nekomaru(at)pku.edu.cn</Authors>
@@ -17,15 +17,6 @@
         <RepositoryUrl>https://github.com/Nekomaru-PKU/Nekomaru.CaptureWindow</RepositoryUrl>
     </PropertyGroup>
     <ItemGroup>
-        <!-- capturing -->
-        <PackageReference Include="System.Runtime.InteropServices.WindowsRuntime" Version="4.3.0" />
-        <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.22000.196" />
-        <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
-        <PackageReference Include="SharpDX.Direct2D1" Version="4.2.0" />
-
-        <!-- cropping -->
-        <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
-        <PackageReference Include="PInvoke.User32" Version="0.7.104" />
-        <PackageReference Include="PInvoke.DwmApi" Version="0.7.104" />
+        <ProjectReference Include="../CaptureWindow/CaptureWindow.csproj"/>
     </ItemGroup>
 </Project>
